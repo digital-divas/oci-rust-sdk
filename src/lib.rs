@@ -124,8 +124,10 @@ fn oci_signer(
 
 impl Nosql {
     pub fn new(config: AuthConfig, service_endpoint: Option<String>) -> Nosql {
-        let se =
-            service_endpoint.unwrap_or(format!("https://nosql.{}.oraclecloud.com", config.region));
+        let se = service_endpoint.unwrap_or(format!(
+            "https://nosql.{}.oci.oraclecloud.com",
+            config.region
+        ));
         return Nosql {
             config,
             service_endpoint: se,

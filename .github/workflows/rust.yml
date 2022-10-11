@@ -32,3 +32,7 @@ jobs:
       run: grcov . --binary-path ./target/debug/ -t coveralls -s . --token ${{ secrets.COVERALLS_TOKEN }} --ignore-not-existing --ignore "/*" > coveralls.json
     - name: Update coverage report
       run: curl -X POST -F "json_file=@/home/ezequiel/Documents/Projects/oci-rust-sdk/coveralls.json" https://coveralls.io/api/v1/jobs
+    - name: cargo-auto-publish
+      # You may pin to the exact commit or the version.
+      # uses: seunlanlege/cargo-auto-publish@12dfb09b683d500a97e239c169d033c8a5809321
+      uses: seunlanlege/cargo-auto-publish@2

@@ -4,17 +4,8 @@ use crate::lib::{AuthConfig, CreateTableDetails, Nosql, QueryDetails, TableLimit
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    let nosql = Nosql::new(
-        AuthConfig::new(
-            String::from("ocid1.user.oc1..random"),
-            String::from("/mnt/5cb80605-c86e-4351-b941-96d1cb6eadab/Documents/Projects/oci-sdk/oci-private-key.pem"),
-            String::from("50:a6:c1:a1:da:71:57:dc:87:ae:90:af:9c:38:99:67"),
-            String::from("ocid1.tenancy.oc1..random"),
-            String::from("sa-saopaulo-1"),
-            String::from(""),
-        ),
-        Some("http://localhost:12000".to_string()),
-    );
+    let auth_config = AuthConfig::from_file(None, None);
+    let nosql = Nosql::new(auth_config, Some("http://localhost:12000".to_string()));
 
     let table_limits = TableLimits {
         max_read_units: 1,

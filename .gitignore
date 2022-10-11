@@ -1,3 +1,4 @@
 /target
 /.vscode
-oci-private-key.pem
+
+lcov.info

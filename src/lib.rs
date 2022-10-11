@@ -1,4 +1,5 @@
 use chrono::{DateTime, Utc};
+use configparser::ini::Ini;
 use openssl::hash::MessageDigest;
 use openssl::pkey::{PKey, Private};
 use openssl::rsa::Rsa;
@@ -9,11 +10,11 @@ use sha2::{Digest, Sha256};
 use std::fs;
 
 pub struct AuthConfig {
-    user: String,
-    fingerprint: String,
-    tenancy: String,
-    region: String,
-    keypair: PKey<Private>,
+    pub user: String,
+    pub fingerprint: String,
+    pub tenancy: String,
+    pub region: String,
+    pub keypair: PKey<Private>,
 }
 
 impl AuthConfig {
@@ -38,6 +39,38 @@ impl AuthConfig {
             region,
             keypair,
         };
+    }
+
+    pub fn from_file(file_path: Option<String>, profile_name: Option<String>) -> AuthConfig {
+        let fp;
+        let pn = profile_name.unwrap_or("DEFAULT".to_string());
+
+        if file_path.is_none() {
+            let home_dir_path = home::home_dir().expect("Impossible to get your home dir!");
+
+            fp = format!(
+                "{}/.oci/config",
+                home_dir_path.to_str().expect("null value")
+            );
+        } else {
+            fp = file_path.expect("file path is not string");
+        }
+
+        let config_content = fs::read_to_string(&fp).expect("config file doest not exists");
+
+        let mut config = Ini::new();
+        config
+            .read(String::from(config_content))
+            .expect("invalid config file");
+
+        return AuthConfig::new(
+            config.get(&pn, "user").unwrap(),
+            config.get(&pn, "key_file").unwrap(),
+            config.get(&pn, "fingerprint").unwrap(),
+            config.get(&pn, "tenancy").unwrap(),
+            config.get(&pn, "region").unwrap(),
+            config.get(&pn, "passphrase").unwrap_or("".to_string()),
+        );
     }
 }
 

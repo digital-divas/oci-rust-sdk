@@ -156,6 +156,16 @@ fn oci_signer(
 }
 
 impl Nosql {
+    ///Creates a new `Nosql` which is the client necessary to interact with this type of object on OCI.
+    ///
+    ///## Example
+    ///```rust
+    ///use oci_sdk::{AuthConfig, Nosql};
+    ///
+    ///let auth_config = AuthConfig::from_file(None, None);
+    ///let nosql = Nosql::new(auth_config, None);
+    ///```
+    ///Returns the Nosql client.
     pub fn new(config: AuthConfig, service_endpoint: Option<String>) -> Nosql {
         let se = service_endpoint.unwrap_or(format!(
             "https://nosql.{}.oci.oraclecloud.com",

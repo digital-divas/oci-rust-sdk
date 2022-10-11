@@ -1,0 +1,34 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Grcov
+      run: cargo install grcov
+    - name: Install llvm-tools
+      run: rustup component add llvm-tools-preview
+    - name: Setting RUSTFLAGS
+      run: export RUSTFLAGS="-Cinstrument-coverage"
+    - name: Settings LLVM_PROFILE_FILE
+      run: export LLVM_PROFILE_FILE="oci_rust_sdk-%p-%m.profraw"
+    - name: Build
+      run: cargo build --verbose
+    - name: Run tests
+      run: cargo test --verbose
+    - name: Regenerate coverage report
+      run: grcov . --binary-path ./target/debug/ -t coveralls -s . --token ${{ secrets.COVERALLS_TOKEN }} --ignore-not-existing --ignore "/*" > coveralls.json
+    - name: Update coverage report
+      run: curl -X POST -F "json_file=@/home/ezequiel/Documents/Projects/oci-rust-sdk/coveralls.json" https://coveralls.io/api/v1/jobs

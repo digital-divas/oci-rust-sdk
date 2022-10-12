@@ -25,6 +25,8 @@ jobs:
         run: export LLVM_PROFILE_FILE="oci_rust_sdk-%p-%m.profraw"
       - name: Build
         run: cargo build --verbose
+      - name: Run OCI Emulator
+        run: docker run -d --name oci-emulator -p 12000:12000 cameritelabs/oci-emulator:latest
       - name: Run tests
         run: cargo test --verbose
       - name: Regenerate coverage report
@@ -36,6 +38,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
+
     steps:
       - name: cargo-auto-publish
         # You may pin to the exact commit or the version.

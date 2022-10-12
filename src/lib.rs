@@ -159,11 +159,20 @@ fn oci_signer(
 impl Nosql {
     ///Creates a new `Nosql` which is the client necessary to interact with this type of object on OCI.
     ///
-    ///## Example
+    ///## Example 1
+    ///```no_run
+    ///use oci_sdk::{AuthConfig, Nosql};
+    ///
+    ///let auth_config = AuthConfig::from_file(None, None);
+    ///let nosql = Nosql::new(auth_config, None);
+    ///```
+    ///
+    /// ## Example 2
+    ///
     ///```rust
     ///use oci_sdk::{AuthConfig, Nosql};
     ///
-    ///let auth_config = AuthConfig::from_file(Some("tests/assets/oci_config".to_string()), None);
+    ///let auth_config = AuthConfig::from_file(Some("tests/assets/oci_config".to_string()), Some("DEFAULT".to_string()));
     ///let nosql = Nosql::new(auth_config, None);
     ///```
     ///Returns the Nosql client.

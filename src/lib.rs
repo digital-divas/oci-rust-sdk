@@ -26,7 +26,7 @@ impl AuthConfig {
         region: String,
         passphrase: String,
     ) -> AuthConfig {
-        let key = fs::read_to_string(&key_file).expect("file doest not exists");
+        let key = fs::read_to_string(&key_file).expect("key_file doest not exists");
 
         let keypair =
             Rsa::private_key_from_pem_passphrase(key.as_bytes(), passphrase.as_bytes()).unwrap();
@@ -56,7 +56,8 @@ impl AuthConfig {
             fp = file_path.expect("file path is not string");
         }
 
-        let config_content = fs::read_to_string(&fp).expect("config file doest not exists");
+        let config_content =
+            fs::read_to_string(&fp).expect(&format!("config file '{}' doest not exists", fp));
 
         let mut config = Ini::new();
         config
@@ -156,6 +157,25 @@ fn oci_signer(
 }
 
 impl Nosql {
+    ///Creates a new `Nosql` which is the client necessary to interact with this type of object on OCI.
+    ///
+    ///## Example 1
+    ///```no_run
+    ///use oci_sdk::{AuthConfig, Nosql};
+    ///
+    ///let auth_config = AuthConfig::from_file(None, None);
+    ///let nosql = Nosql::new(auth_config, None);
+    ///```
+    ///
+    /// ## Example 2
+    ///
+    ///```rust
+    ///use oci_sdk::{AuthConfig, Nosql};
+    ///
+    ///let auth_config = AuthConfig::from_file(Some("tests/assets/oci_config".to_string()), Some("DEFAULT".to_string()));
+    ///let nosql = Nosql::new(auth_config, None);
+    ///```
+    ///Returns the Nosql client.
     pub fn new(config: AuthConfig, service_endpoint: Option<String>) -> Nosql {
         let se = service_endpoint.unwrap_or(format!(
             "https://nosql.{}.oci.oraclecloud.com",

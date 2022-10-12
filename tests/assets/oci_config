@@ -1,0 +1,6 @@
+[DEFAULT]
+user=ocid1.user.oc1..aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+fingerprint=a0:b1:c2:d3:e4:f5:g6:h7:i8:j9:k0:l1:m2:n3:o4:p5
+key_file=tests/assets/oci_api_key.pem
+tenancy=ocid1.tenancy.oc1..aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+region=sa-saopaulo-1

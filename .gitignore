@@ -2,3 +2,6 @@
 /.vscode
 
 lcov.info
+coveralls.json
+
+*.profraw

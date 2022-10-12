@@ -56,7 +56,8 @@ impl AuthConfig {
             fp = file_path.expect("file path is not string");
         }
 
-        let config_content = fs::read_to_string(&fp).expect("config file doest not exists");
+        let config_content =
+            fs::read_to_string(&fp).expect(&format!("config file '{}' doest not exists", fp));
 
         let mut config = Ini::new();
         config

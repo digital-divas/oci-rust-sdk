@@ -28,7 +28,7 @@ jobs:
           cargo build --verbose
           cargo test --verbose
           grcov . --binary-path ./target/debug/ -t coveralls -s . --token ${{ secrets.COVERALLS_TOKEN }} --ignore-not-existing --ignore "/*" > coveralls.json
-          curl -X POST -F "json_file=@/home/ezequiel/Documents/Projects/oci-rust-sdk/coveralls.json" https://coveralls.io/api/v1/jobs
+          curl -X POST -F "json_file=@coveralls.json" https://coveralls.io/api/v1/jobs
 
   build_publish:
     needs: test

@@ -24,10 +24,11 @@ jobs:
           toolchain: stable
           override: true
           
-      - name: rust-tarpaulin
-        uses: actions-rs/tarpaulin@v0.1.0
-        with:
-          out-type: Lcov
+      - name: install tarpaulin
+        run: cargo install cargo-tarpaulin
+        
+      - name: run tarpaulin
+        run: cargo tarpaulin --out Lcov
 
       - name: Codecov
         uses: codecov/codecov-action@v3.1.0

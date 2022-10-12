@@ -19,20 +19,16 @@ jobs:
         run: cargo install grcov
       - name: Install llvm-tools
         run: rustup component add llvm-tools-preview
-      - name: Setting RUSTFLAGS
-        run: export RUSTFLAGS="-Cinstrument-coverage"
-      - name: Settings LLVM_PROFILE_FILE
-        run: export LLVM_PROFILE_FILE="oci_rust_sdk-%p-%m.profraw"
-      - name: Build
-        run: cargo build --verbose
       - name: Run OCI Emulator
         run: docker run -d --name oci-emulator -p 12000:12000 cameritelabs/oci-emulator:latest
-      - name: Run tests
-        run: cargo test --verbose
-      - name: Regenerate coverage report
-        run: grcov . --binary-path ./target/debug/ -t coveralls -s . --token ${{ secrets.COVERALLS_TOKEN }} --ignore-not-existing --ignore "/*" > coveralls.json
-      - name: Update coverage report
-        run: curl -X POST -F "json_file=@/home/ezequiel/Documents/Projects/oci-rust-sdk/coveralls.json" https://coveralls.io/api/v1/jobs
+      - name: Setting RUSTFLAGS
+        run: |
+          export RUSTFLAGS="-Cinstrument-coverage"
+          export LLVM_PROFILE_FILE="oci_rust_sdk-%p-%m.profraw"
+          cargo build --verbose
+          cargo test --verbose
+          grcov . --binary-path ./target/debug/ -t coveralls -s . --token ${{ secrets.COVERALLS_TOKEN }} --ignore-not-existing --ignore "/*" > coveralls.json
+          curl -X POST -F "json_file=@/home/ezequiel/Documents/Projects/oci-rust-sdk/coveralls.json" https://coveralls.io/api/v1/jobs
 
   build_publish:
     needs: test

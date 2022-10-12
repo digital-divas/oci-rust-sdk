@@ -26,7 +26,7 @@ impl AuthConfig {
         region: String,
         passphrase: String,
     ) -> AuthConfig {
-        let key = fs::read_to_string(&key_file).expect("file doest not exists");
+        let key = fs::read_to_string(&key_file).expect("key_file doest not exists");
 
         let keypair =
             Rsa::private_key_from_pem_passphrase(key.as_bytes(), passphrase.as_bytes()).unwrap();

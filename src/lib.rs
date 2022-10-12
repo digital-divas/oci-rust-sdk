@@ -163,7 +163,7 @@ impl Nosql {
     ///```rust
     ///use oci_sdk::{AuthConfig, Nosql};
     ///
-    ///let auth_config = AuthConfig::from_file(None, None);
+    ///let auth_config = AuthConfig::from_file(Some("tests/assets/oci_config".to_string()), None);
     ///let nosql = Nosql::new(auth_config, None);
     ///```
     ///Returns the Nosql client.

@@ -4,7 +4,7 @@ use crate::lib::{AuthConfig, CreateTableDetails, Nosql, QueryDetails, TableLimit
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    let auth_config = AuthConfig::from_file(None, None);
+    let auth_config = AuthConfig::from_file(Some("tests/assets/oci_config".to_string()), None);
     let nosql = Nosql::new(auth_config, Some("http://localhost:12000".to_string()));
 
     let table_limits = TableLimits {

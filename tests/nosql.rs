@@ -1,6 +1,9 @@
 #[cfg(test)]
 mod tests {
-    use oci_sdk::{AuthConfig, CreateTableDetails, Nosql, QueryDetails, TableLimits};
+    use oci_sdk::{
+        config::AuthConfig,
+        nosql::{CreateTableDetails, Nosql, QueryDetails, TableLimits},
+    };
 
     #[tokio::test]
     async fn nosql() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
@@ -14,10 +17,10 @@ mod tests {
         };
 
         let create_table_details = CreateTableDetails {
-        name: String::from("table_name"),
-        compartment_id: String::from("ocid1.compartment.oc1..randomcompartment"),
-        ddl_statement: String::from("CREATE TABLE table_name ( stream_name string, start number, finish number, shot_source string DEFAULT \"IMAGE_SERVER\" NOT NULL, video_source string DEFAULT \"OCI\" NOT NULL, PRIMARY KEY ( SHARD ( stream_name ), start ) )"),
-        table_limits,
+            name: String::from("table_name"),
+            compartment_id: String::from("ocid1.compartment.oc1..randomcompartment"),
+            ddl_statement: String::from("CREATE TABLE table_name ( stream_name string, start number, finish number, shot_source string DEFAULT \"IMAGE_SERVER\" NOT NULL, video_source string DEFAULT \"OCI\" NOT NULL, PRIMARY KEY ( SHARD ( stream_name ), start ) )"),
+            table_limits,
         };
 
         let response = nosql.create_table(create_table_details).await?;

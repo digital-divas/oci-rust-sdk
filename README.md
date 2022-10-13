@@ -1,5 +1,7 @@
 # oci-rust-sdk
 
+[![Crates.io](https://img.shields.io/crates/v/oci-sdk.svg)](https://crates.io/crates/oci-sdk)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/digital-divas/oci-rust-sdk/blob/master/LICENSE)
 [![Rust](https://github.com/digital-divas/oci-rust-sdk/actions/workflows/rust.yml/badge.svg)](https://github.com/digital-divas/oci-rust-sdk/actions/workflows/rust.yml)
 [![codecov](https://codecov.io/gh/digital-divas/oci-rust-sdk/branch/master/graph/badge.svg?token=XJJXHENTK4)](https://codecov.io/gh/digital-divas/oci-rust-sdk)
 

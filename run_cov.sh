@@ -1,1 +1,0 @@
-cargo tarpaulin --out Lcov

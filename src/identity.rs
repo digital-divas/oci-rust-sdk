@@ -35,6 +35,9 @@ impl Identity {
     ///```
     ///Returns the Nosql client.
     pub fn new(config: AuthConfig, service_endpoint: Option<String>) -> Identity {
+
+        println!("test");
+
         let se = service_endpoint.unwrap_or(format!(
             "https://identity.{}.oci.oraclecloud.com",
             config.region
